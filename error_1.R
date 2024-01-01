@@ -12,6 +12,7 @@ lm(mpg ~ ., data=y)
 
 # error solution:
 # the following code removes all factor variables in the dataset "y" with only one level and stores the resulting dataset (cleaned) in "yy"
+contrasts <- function(df){
 a <- which(grepl("factor", lapply(y, class))) # "a" contains the column indexes of all the factor variables in the dataset "y"
 b <- lapply(y[a], function(x) length(unique(x))) # "b" (list) contains the number of unique values for each of the factor variables in the dataset "y"
 b <- unlist(b, recursive = FALSE) # list "b" is flattened into a vector "b"
@@ -19,8 +20,9 @@ if (any(b == 1)) { # condition to check whether any elements in "b" are equal to
   c <- which(b == 1) # "c" contains the indexes of "b" elements which are equal to 1
   d <- paste0(names(c), collapse = "|") # "d" contains a single string of the names (same as column names of "y") of all the "b" elements which are equal to 1 separated by "|"
   e <- which(grepl(as.character(d), colnames(y))) # "e" contains the column indexes of all the factor variables (or columns) in the dataset "y" with only one level
-  yy <- y[-e]} # "yy" contains all the variables (or columns) which are in "y," except the factor variables (or columns) with only one level
-else {yy <- y} # "yy" contains all the variables (or columns) which are in "y," except the factor variables (or columns) with only one level
-
+  yy <<- y[-e]} # "yy" contains all the variables (or columns) which are in "y," except the factor variables (or columns) with only one level
+else {yy <<- y} # "yy" contains all the variables (or columns) which are in "y," except the factor variables (or columns) with only one level
+}
+            
 lm(mpg ~ ., data=yy)
 # no error occurs
