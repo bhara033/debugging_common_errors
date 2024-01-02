@@ -9,8 +9,8 @@ as.formula(paste0(colnames(mtcars)[ab], collapse = " ~ ")) # using colnames(mtca
 clean_formula <- function(data, ...) {
   formula_string <- paste0(...)
   
-  if (!stringi::stri_detect(formula_string, fixed = " ~ ")) {
-    formula_string <- paste0(" ~ ", formula_string)
+  if (!stringi::stri_detect(formula_string, fixed = "~ ")) {
+    formula_string <- paste0("~ ", formula_string)
   }
   
   a <- colnames(data)
