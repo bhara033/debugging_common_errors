@@ -1,3 +1,10 @@
+# simple solution using grepl
+a <- which(grepl("mpg|disp", colnames(mtcars)))
+b <- which(!grepl("mpg|disp", colnames(mtcars)))
+ab <- setdiff(a,b) # additional check
+as.formula(paste0(colnames(mtcars)[ab], collapse = " ~ ")) # using colnames(mtcars)[a] should yield the same results
+
+# if the simpler solution also fails, try simplifying the variable names
 # rewrite model input formula with simplified names (variable index number with prefix "var")
 clean_formula <- function(data, ...) {
   formula_string <- paste0(...)
